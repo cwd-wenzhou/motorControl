@@ -15,10 +15,8 @@ public class MotorControlServiceImpl implements MotorControlService {
     MotorService motorService;
     final
     UDPService udpService;
-
     final
     StateMachineService stateMachineService;
-
 
     public MotorControlServiceImpl(MotorService motorService, UDPService udpService, StateMachineService stateMachineService) {
         this.motorService = motorService;
@@ -85,45 +83,67 @@ public class MotorControlServiceImpl implements MotorControlService {
 
     @Override
     public void setPositionRingKp(short positionRingKp) throws IOException {
-//        before();
-//        motor.setPositionRingKp(positionRingKp);
-//        end();
+        stateMachineService.changeToPoweredLock();
+        Motor motor = udpService.receive();
+        while (motor.getPositionRingKp()!=positionRingKp){
+            motor.setPositionRingKp(positionRingKp);
+            motor.setControlCode((short) 0xff00);
+            udpService.SendMessage(motor);
+        }
     }
 
     @Override
     public void setPositionRingKd(short positionRingKd) throws IOException {
-//        before();
-//        motor.setPositionRingKd(positionRingKd);
-//        end();
+        stateMachineService.changeToPoweredLock();
+        Motor motor = udpService.receive();
+        while (motor.getPositionRingKd()!=positionRingKd){
+            motor.setPositionRingKd(positionRingKd);
+            motor.setControlCode((short) 0xff00);
+            udpService.SendMessage(motor);
+        }
     }
 
     @Override
     public void setSpeedRingKp(short speedRingKp) throws IOException {
-//        before();
-//        motor.setSpeedRingKp(speedRingKp);
-//        end();
+        stateMachineService.changeToPoweredLock();
+        Motor motor = udpService.receive();
+        while (motor.getSpeedRingKp()!=speedRingKp){
+            motor.setSpeedRingKp(speedRingKp);
+            motor.setControlCode((short) 0xff00);
+            udpService.SendMessage(motor);
+        }
     }
 
     @Override
     public void setSpeedRingKi(short speedRingKi) throws IOException {
-//        before();
-//        motor.setSpeedRingKi(speedRingKi);
-//        end();
+        stateMachineService.changeToPoweredLock();
+        Motor motor = udpService.receive();
+        while (motor.getSpeedRingKi()!=speedRingKi){
+            motor.setSpeedRingKi(speedRingKi);
+            motor.setControlCode((short) 0xff00);
+            udpService.SendMessage(motor);
+        }
     }
 
     @Override
     public void setCurrentRingKp(short currentRingKp) throws IOException {
-//        before();
-//        motor.setCurrentRingKp(currentRingKp);
-//        end();
+        stateMachineService.changeToPoweredLock();
+        Motor motor = udpService.receive();
+        while (motor.getCurrentRingKp()!=currentRingKp){
+            motor.setCurrentRingKp(currentRingKp);
+            motor.setControlCode((short) 0xff00);
+            udpService.SendMessage(motor);
+        }
     }
 
     @Override
     public void setCurrentRingKi(short currentRingKi) throws IOException {
-//        before();
-//        motor.setCurrentRingKi(currentRingKi);
-//        end();
+        stateMachineService.changeToPoweredLock();
+        Motor motor = udpService.receive();
+        while (motor.getCurrentRingKi()!=currentRingKi){
+            motor.setCurrentRingKi(currentRingKi);
+            motor.setControlCode((short) 0xff00);
+            udpService.SendMessage(motor);
+        }
     }
-
-
 }
