@@ -1,3 +1,5 @@
+create database motor precision "ns";
+
 CREATE TABLE `motor_data`
 (`timestamp` TIMESTAMP, 
 `status_code` int,

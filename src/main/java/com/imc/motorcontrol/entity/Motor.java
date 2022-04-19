@@ -1,20 +1,15 @@
 package com.imc.motorcontrol.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +19,6 @@ public class Motor implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS",timezone = "GMT-8")
-    @TableField(fill = FieldFill.INSERT)
     private Timestamp timestamp;
 
     private Short statusCode;
@@ -55,6 +49,8 @@ public class Motor implements Serializable {
     private Short currentRingKi;
 
     public Motor(byte @NotNull [] data){
+        LocalDateTime now = LocalDateTime.now();
+        this.timestamp = Timestamp.valueOf(now);
         this.statusCode = ((short) (((data[2] & 0xFF) << 8) | (data[3] & 0xFF)));
         this.controlCode = ((short) (((data[4] & 0xFF) << 8) | (data[5] & 0xFF)));
         this.modeCode=((short) (((data[6] & 0xFF) << 8) | (data[7] & 0xFF)));
@@ -84,6 +80,8 @@ public class Motor implements Serializable {
     }
 
     public Motor() {
+        LocalDateTime now = LocalDateTime.now();
+        this.timestamp = Timestamp.valueOf(now);
         this.statusCode = 0;
         this.controlCode = 0;
         this.modeCode = 0;
@@ -108,7 +106,7 @@ public class Motor implements Serializable {
         this.currentRingKi = 0;
     }
 
-    public byte[] getBytes() throws IOException {
+    public byte[] getBytes()  {
         byte[]  res = new byte[48];
         res[0] = 0x33;
         res[1] = 0x33;

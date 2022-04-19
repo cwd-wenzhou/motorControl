@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface MotorService extends IService<Motor> {
-    public List<Motor> selectFromZone(Timestamp start,Timestamp stop);
+    List<Motor> selectFromZone(Timestamp start,Timestamp stop);
 
+    Long CountFromZone(Timestamp start, Timestamp stop);
 }

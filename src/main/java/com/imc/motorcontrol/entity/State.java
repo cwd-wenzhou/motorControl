@@ -7,5 +7,5 @@ public enum State {
     powered_lock,//电机使能锁死 0x0003
     op,//电机运行 0x0004
     error,//故障停机 0x00ff
-    unknowState // 未知故障
+    unknownState // 未知故障
 }

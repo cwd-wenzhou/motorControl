@@ -1,6 +1,5 @@
 package com.imc.motorcontrol.service.Impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imc.motorcontrol.entity.Motor;
@@ -21,4 +20,13 @@ public class MotorServiceImpl extends ServiceImpl<MotorMapper, Motor> implements
         motorQueryWrapper.between("timestamp", start, stop);
         return baseMapper.selectList(motorQueryWrapper);
     }
+
+    @Override
+    public Long CountFromZone(Timestamp start, Timestamp stop) {
+
+        QueryWrapper<Motor> motorQueryWrapper = new QueryWrapper<>();
+        motorQueryWrapper.between("timestamp", start, stop);
+        return baseMapper.selectCount(motorQueryWrapper);
+    }
+
 }

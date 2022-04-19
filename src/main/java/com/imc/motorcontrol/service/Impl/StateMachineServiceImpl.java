@@ -1,10 +1,10 @@
 package com.imc.motorcontrol.service.Impl;
 
+import com.imc.motorcontrol.UDP.UDPServer;
 import com.imc.motorcontrol.entity.Motor;
 import com.imc.motorcontrol.entity.State;
 import com.imc.motorcontrol.service.MotorService;
 import com.imc.motorcontrol.service.StateMachineService;
-import com.imc.motorcontrol.service.UDPService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,11 @@ public class StateMachineServiceImpl implements StateMachineService {
     final
     MotorService motorService;
     final
-    UDPService udpService;
+    UDPServer udpServer;
 
-    public StateMachineServiceImpl(MotorService motorService, UDPService udpService) {
+    public StateMachineServiceImpl(MotorService motorService, UDPServer udpService) {
         this.motorService = motorService;
-        this.udpService = udpService;
+        this.udpServer = udpService;
     }
 
     @Override
@@ -45,12 +45,12 @@ public class StateMachineServiceImpl implements StateMachineService {
                 System.out.println("error");
                 break;
             default:
-                System.out.println("unknowState");
+                System.out.println("unknownState");
         }
     }
     @Override
     public State getState() throws IOException {
-        Short statusCode = udpService.receive().getStatusCode();
+        Short statusCode = udpServer.receive().getStatusCode();
         switch (statusCode){
             case 0:
                 return State.power;
@@ -65,14 +65,14 @@ public class StateMachineServiceImpl implements StateMachineService {
             case 255:
                 return State.error;
             default:
-                return State.unknowState;
+                return State.unknownState;
         }
     }
 
 
     @Override
     public void changeToOp() throws IOException {
-        Motor motor = udpService.receive();
+        Motor motor = udpServer.receive();
         State state = getState();
         while (state!=State.op){
             //printState(state);
@@ -80,11 +80,11 @@ public class StateMachineServiceImpl implements StateMachineService {
                 case server_op:
                 case error:
                     motor.setControlCode((short) 0x0100);
-                    udpService.SendMessage(motor);
+                    udpServer.send(motor);
                     break;
                 case powered_lock:
                     motor.setControlCode((short) 0x0200);
-                    udpService.SendMessage(motor);
+                    udpServer.send(motor);
                     break;
             }
             state = getState();
@@ -94,7 +94,7 @@ public class StateMachineServiceImpl implements StateMachineService {
 
     @Override
     public void changeToPoweredLock() throws IOException {
-        Motor motor = udpService.receive();
+        Motor motor = udpServer.receive();
         State state = getState();
         while (state!=State.powered_lock){
             switch (state){
@@ -102,7 +102,7 @@ public class StateMachineServiceImpl implements StateMachineService {
                 case op:
                 case error:
                     motor.setControlCode((short) 0x0100);
-                    udpService.SendMessage(motor);
+                    udpServer.send(motor);
                     break;
             }
             state = getState();
