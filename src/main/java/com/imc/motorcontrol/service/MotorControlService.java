@@ -17,7 +17,7 @@ public interface MotorControlService {
     void setCurrentRingKp(short currentRingKp) throws IOException;
     void setCurrentRingKi(short currentRingKi) throws IOException;
 
-    Timestamp startSample();
+    Timestamp startSample(String name);
     Timestamp endSample() throws InterruptedException;
 
 }

@@ -1,5 +1,7 @@
 package com.imc.motorcontrol.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.imc.motorcontrol.entity.Sample;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,12 @@ class SampleServiceTest {
     void selectTest(){
         List<Sample> samples = sampleService.list();
         samples.forEach(System.out::println);
+    }
+
+    @Test
+    void selectOneTest(){
+        //QueryWrapper<Object> queryWrapper = new QueryWrapper<>();
+        //queryWrapper.eq()
+        System.out.println(sampleService.getById("测试1"));
     }
 }

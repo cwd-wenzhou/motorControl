@@ -2,9 +2,11 @@ package com.imc.motorcontrol.service.Impl;
 
 import com.imc.motorcontrol.UDP.UDPServer;
 import com.imc.motorcontrol.entity.Motor;
+import com.imc.motorcontrol.entity.Sample;
 import com.imc.motorcontrol.entity.Thread.SampleThread;
 import com.imc.motorcontrol.service.MotorControlService;
 import com.imc.motorcontrol.service.MotorService;
+import com.imc.motorcontrol.service.SampleService;
 import com.imc.motorcontrol.service.StateMachineService;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +16,24 @@ import java.time.LocalDateTime;
 
 @Service
 public class MotorControlServiceImpl implements MotorControlService {
-    final
-    MotorService motorService;
-    final
-    UDPServer udpServer;
-    final
-    StateMachineService stateMachineService;
+    final MotorService motorService;
+    final UDPServer udpServer;
+    final StateMachineService stateMachineService;
+    final SampleService sampleService;
 
     private SampleThread sampleThread;
 
-    public MotorControlServiceImpl(MotorService motorService, UDPServer udpService, StateMachineService stateMachineService) {
+    private Timestamp startTime;
+
+    private Timestamp endTime;
+
+    private String name;
+
+    public MotorControlServiceImpl(MotorService motorService, UDPServer udpService, StateMachineService stateMachineService, SampleService sampleService) {
         this.motorService = motorService;
         this.udpServer = udpService;
         this.stateMachineService = stateMachineService;
+        this.sampleService = sampleService;
     }
 
     @Override
@@ -153,12 +160,14 @@ public class MotorControlServiceImpl implements MotorControlService {
     }
 
     @Override
-    public Timestamp startSample() {
+    public Timestamp startSample(String name) {
+        this.name = name;
         sampleThread = new SampleThread(motorService,udpServer,stateMachineService);
         sampleThread.setRunning(true);
         LocalDateTime now = LocalDateTime.now();
         sampleThread.start();
-        return Timestamp.valueOf(now);
+        startTime = Timestamp.valueOf(now);
+        return startTime;
     }
 
     @Override
@@ -166,6 +175,8 @@ public class MotorControlServiceImpl implements MotorControlService {
         sampleThread.setRunning(false);
         sampleThread.join();
         LocalDateTime now = LocalDateTime.now();
+        endTime = Timestamp.valueOf(now);
+        sampleService.save(new Sample(startTime,endTime,name));
         return Timestamp.valueOf(now);
     }
 
