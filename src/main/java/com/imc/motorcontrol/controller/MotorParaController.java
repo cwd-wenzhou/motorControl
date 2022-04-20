@@ -10,12 +10,12 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/motorpara")
-public class MotorparaController {
+public class MotorParaController {
 
     final
     MotorControlService motorControlService;
 
-    public MotorparaController(MotorControlService motorControlService) {
+    public MotorParaController(MotorControlService motorControlService) {
         this.motorControlService = motorControlService;
     }
 

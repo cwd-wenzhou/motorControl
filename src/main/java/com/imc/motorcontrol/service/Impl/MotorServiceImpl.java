@@ -17,7 +17,7 @@ public class MotorServiceImpl extends ServiceImpl<MotorMapper, Motor> implements
     public List<Motor> selectFromZone(Timestamp start, Timestamp stop) {
 
         QueryWrapper<Motor> motorQueryWrapper = new QueryWrapper<>();
-        motorQueryWrapper.between("timestamp", start, stop);
+        motorQueryWrapper.between("sampleTime", start, stop);
         return baseMapper.selectList(motorQueryWrapper);
     }
 
@@ -25,7 +25,7 @@ public class MotorServiceImpl extends ServiceImpl<MotorMapper, Motor> implements
     public Long CountFromZone(Timestamp start, Timestamp stop) {
 
         QueryWrapper<Motor> motorQueryWrapper = new QueryWrapper<>();
-        motorQueryWrapper.between("timestamp", start, stop);
+        motorQueryWrapper.between("sampleTime", start, stop);
         return baseMapper.selectCount(motorQueryWrapper);
     }
 

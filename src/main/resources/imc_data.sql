@@ -1,7 +1,7 @@
 create database motor precision "ns";
 
 CREATE TABLE `motor_data`
-(`timestamp` TIMESTAMP, 
+(`sample_time` TIMESTAMP,
 `status_code` int,
 `control_code` int,
 `mode_code` int,

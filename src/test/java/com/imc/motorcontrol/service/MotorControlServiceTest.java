@@ -119,10 +119,10 @@ class MotorControlServiceTest {
 
     @Test
     void sampleTest() throws InterruptedException {
-        Timestamp startTime = motorControlService.startSample("test");
+        Timestamp startTime = motorControlService.startSample();
         Thread.sleep(10000);
         Timestamp endTime = motorControlService.endSample();
-        //System.out.println("end sample");
-        //motorService.selectFromZone(startTime,endTime).forEach(System.out::println);
+        System.out.println("end sample");
+        motorService.selectFromZone(startTime,endTime).forEach(System.out::println);
     }
 }

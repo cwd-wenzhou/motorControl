@@ -4,13 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
 @Slf4j
 @Component
-@ServerEndpoint("/api/websocket/{sid}")
+@ServerEndpoint("/websocket")
 public class WebSocketServer {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -19,9 +18,6 @@ public class WebSocketServer {
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
-
-    //接收sid
-    private String sid = "";
 
     public static void setWebSocketSet(CopyOnWriteArraySet<WebSocketServer> webSocketSet) {
         WebSocketServer.webSocketSet = webSocketSet;
@@ -39,14 +35,14 @@ public class WebSocketServer {
      * 连接建立成功调用的方法
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam("sid") String sid) {
+    public void onOpen(Session session) {
         this.session = session;
         webSocketSet.add(this);     //加入set中
-        this.sid = sid;
+
         addOnlineCount();           //在线数加1
         try {
             sendMessage("conn_success");
-            log.info("有新窗口开始监听:" + sid + ",当前在线人数为:" + getOnlineCount());
+            log.info("当前在线人数为:" + getOnlineCount());
         } catch (IOException e) {
             log.error("websocket IO Exception");
         }
@@ -59,8 +55,7 @@ public class WebSocketServer {
     public void onClose() {
         webSocketSet.remove(this);  //从set中删除
         subOnlineCount();           //在线数减1
-        //断开连接情况下，更新主板占用情况为释放
-        log.info("释放的sid为："+sid);
+
         //这里写你 释放的时候，要处理的业务
         log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
 
@@ -72,7 +67,7 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("收到来自窗口" + sid + "的信息:" + message);
+        log.info("收到来自窗口的信息:" + message);
         //群发消息
         for (WebSocketServer item : webSocketSet) {
             try {

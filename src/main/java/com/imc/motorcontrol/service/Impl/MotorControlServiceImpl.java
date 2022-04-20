@@ -2,11 +2,9 @@ package com.imc.motorcontrol.service.Impl;
 
 import com.imc.motorcontrol.UDP.UDPServer;
 import com.imc.motorcontrol.entity.Motor;
-import com.imc.motorcontrol.entity.Sample;
 import com.imc.motorcontrol.entity.Thread.SampleThread;
 import com.imc.motorcontrol.service.MotorControlService;
 import com.imc.motorcontrol.service.MotorService;
-import com.imc.motorcontrol.service.SampleService;
 import com.imc.motorcontrol.service.StateMachineService;
 import org.springframework.stereotype.Service;
 
@@ -19,21 +17,15 @@ public class MotorControlServiceImpl implements MotorControlService {
     final MotorService motorService;
     final UDPServer udpServer;
     final StateMachineService stateMachineService;
-    final SampleService sampleService;
 
     private SampleThread sampleThread;
 
-    private Timestamp startTime;
 
-    private Timestamp endTime;
 
-    private String name;
-
-    public MotorControlServiceImpl(MotorService motorService, UDPServer udpService, StateMachineService stateMachineService, SampleService sampleService) {
+    public MotorControlServiceImpl(MotorService motorService, UDPServer udpService, StateMachineService stateMachineService) {
         this.motorService = motorService;
         this.udpServer = udpService;
         this.stateMachineService = stateMachineService;
-        this.sampleService = sampleService;
     }
 
     @Override
@@ -160,24 +152,20 @@ public class MotorControlServiceImpl implements MotorControlService {
     }
 
     @Override
-    public Timestamp startSample(String name) {
-        this.name = name;
+    public Timestamp startSample() {
         sampleThread = new SampleThread(motorService,udpServer,stateMachineService);
         sampleThread.setRunning(true);
         LocalDateTime now = LocalDateTime.now();
         sampleThread.start();
-        startTime = Timestamp.valueOf(now);
-        return startTime;
+        return Timestamp.valueOf(now);
     }
 
     @Override
     public Timestamp endSample() throws InterruptedException {
         sampleThread.setRunning(false);
         sampleThread.join();
-        LocalDateTime now = LocalDateTime.now();
-        endTime = Timestamp.valueOf(now);
-        sampleService.save(new Sample(startTime,endTime,name));
-        return Timestamp.valueOf(now);
+//        sampleService.save(new Sample(startTime,endTime,name));
+        return Timestamp.valueOf(LocalDateTime.now());
     }
 
 

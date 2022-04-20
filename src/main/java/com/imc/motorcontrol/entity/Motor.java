@@ -19,7 +19,7 @@ public class Motor implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS",timezone = "GMT-8")
-    private Timestamp timestamp;
+    private Timestamp sampleTime;
 
     private Short statusCode;
     private Short controlCode;
@@ -50,7 +50,7 @@ public class Motor implements Serializable {
 
     public Motor(byte @NotNull [] data){
         LocalDateTime now = LocalDateTime.now();
-        this.timestamp = Timestamp.valueOf(now);
+        this.sampleTime = Timestamp.valueOf(now);
         this.statusCode = ((short) (((data[2] & 0xFF) << 8) | (data[3] & 0xFF)));
         this.controlCode = ((short) (((data[4] & 0xFF) << 8) | (data[5] & 0xFF)));
         this.modeCode=((short) (((data[6] & 0xFF) << 8) | (data[7] & 0xFF)));
@@ -81,7 +81,7 @@ public class Motor implements Serializable {
 
     public Motor() {
         LocalDateTime now = LocalDateTime.now();
-        this.timestamp = Timestamp.valueOf(now);
+        this.sampleTime = Timestamp.valueOf(now);
         this.statusCode = 0;
         this.controlCode = 0;
         this.modeCode = 0;

@@ -2,7 +2,6 @@ package com.imc.motorcontrol.controller;
 
 import com.imc.motorcontrol.entity.Motor;
 import com.imc.motorcontrol.entity.Sample;
-import com.imc.motorcontrol.service.MotorControlService;
 import com.imc.motorcontrol.service.MotorService;
 import com.imc.motorcontrol.service.SampleService;
 import org.springframework.stereotype.Controller;
@@ -14,21 +13,23 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/motordata/history")
-public class MotorDataController {
+public class MotorDataHistoryController {
     final SampleService sampleService;
-
-    final MotorControlService motorControlService;
 
     final MotorService motorService;
 
-    public MotorDataController(SampleService sampleService, MotorControlService motorControlService, MotorService motorService) {
+    public MotorDataHistoryController(SampleService sampleService, MotorService motorService) {
         this.sampleService = sampleService;
-        this.motorControlService = motorControlService;
         this.motorService = motorService;
     }
 
+    @GetMapping("/name")
+    List<Sample> getSampleNames(){
+        return sampleService.list();
+    }
+
     @GetMapping("/{name}")
-    List<Motor> getSampleNames(@PathVariable String name){
+    List<Motor> getSampleData(@PathVariable String name){
         Sample sample = sampleService.getById(name);
         if (sample==null)
             return null;

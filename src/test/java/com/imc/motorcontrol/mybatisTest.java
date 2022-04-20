@@ -41,10 +41,7 @@ public class mybatisTest {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         System.out.println(timestamp);
         Motor motor = new Motor();
-        long start_time = System.nanoTime();
         motorService.save(motor);
-        long end_time = System.nanoTime();
-        System.out.println(end_time - start_time);
 
     }
 
@@ -52,7 +49,7 @@ public class mybatisTest {
     void getMotor() {
         List<Motor> list = motorService.list();
         for (Motor motor : list) {
-            Timestamp timestamp = motor.getTimestamp();
+            Timestamp timestamp = motor.getSampleTime();
             System.out.println(timestamp);
         }
     }

@@ -12,8 +12,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
 //        LocalDateTime now = LocalDateTime.now();
-//        Timestamp timestamp = Timestamp.valueOf(now);
-//        this.setFieldValByName("timestamp", timestamp, metaObject);
+//        Timestamp sampleTime = Timestamp.valueOf(now);
+//        this.setFieldValByName("sampleTime", sampleTime, metaObject);
     }
 
     @Override
