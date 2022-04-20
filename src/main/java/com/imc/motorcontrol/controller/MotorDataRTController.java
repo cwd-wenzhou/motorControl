@@ -3,14 +3,14 @@ package com.imc.motorcontrol.controller;
 import com.imc.motorcontrol.entity.Sample;
 import com.imc.motorcontrol.service.MotorControlService;
 import com.imc.motorcontrol.service.SampleService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 
-@Controller
+@RestController
 @RequestMapping("/motordata/rtdata")
 public class MotorDataRTController {
     final MotorControlService motorControlService;

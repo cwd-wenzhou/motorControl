@@ -4,14 +4,14 @@ import com.imc.motorcontrol.entity.Motor;
 import com.imc.motorcontrol.entity.Sample;
 import com.imc.motorcontrol.service.MotorService;
 import com.imc.motorcontrol.service.SampleService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/motordata/history")
 public class MotorDataHistoryController {
     final SampleService sampleService;

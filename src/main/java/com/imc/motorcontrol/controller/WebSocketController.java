@@ -1,5 +1,6 @@
 package com.imc.motorcontrol.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.imc.motorcontrol.entity.Motor;
 import com.imc.motorcontrol.service.MotorService;
@@ -33,11 +34,11 @@ public class WebSocketController {
             QueryWrapper<Motor> motorQueryWrapper = new QueryWrapper<>();
             motorQueryWrapper.orderByDesc("sample_time").last("limit 1");
             Motor motor = motorService.getOne(motorQueryWrapper);
-
+            String jsonStr = JSON.toJSONString(motor);
             CopyOnWriteArraySet<WebSocketServer> webSocketSet = WebSocketServer.getWebSocketSet();
             webSocketSet.forEach(c->{
                 try {
-                    c.sendMessage(motor.toString());
+                    c.sendMessage(jsonStr);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

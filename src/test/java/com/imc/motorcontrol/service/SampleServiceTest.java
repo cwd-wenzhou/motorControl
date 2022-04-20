@@ -1,7 +1,5 @@
 package com.imc.motorcontrol.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.imc.motorcontrol.entity.Sample;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SampleServiceTest {
@@ -21,7 +18,7 @@ class SampleServiceTest {
     @Test
     void insertTest(){
         Sample sample = new Sample();
-        sample.setSampleName("测试1");
+        sample.setSampleName("测试3");
         sample.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
         sample.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
         sampleService.save(sample);

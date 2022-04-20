@@ -21,6 +21,7 @@ public class MotorParaController {
 
     @GetMapping("/mode/{mode}")
     public void setModecode(@PathVariable Short mode) throws IOException {
+        System.out.println(mode);
         motorControlService.setModeCode(mode);
     }
 
@@ -61,7 +62,7 @@ public class MotorParaController {
         motorControlService.setPositionRingKp(positionRingKp);
     }
 
-    @GetMapping("poskp/{positionRingKd}")
+    @GetMapping("poskd/{positionRingKd}")
     void setPositionRingKd(@PathVariable short positionRingKd) throws IOException{
         motorControlService.setPositionRingKd(positionRingKd);
     }
