@@ -49,8 +49,8 @@ public class StateMachineServiceImpl implements StateMachineService {
         }
     }
     @Override
-    public State getState() throws IOException {
-        Short statusCode = udpServer.receive().getStatusCode();
+    public State getState(int num) throws IOException {
+        Short statusCode = udpServer.receive(num).getStatusCode();
         switch (statusCode){
             case 0:
                 return State.power;
@@ -71,41 +71,41 @@ public class StateMachineServiceImpl implements StateMachineService {
 
 
     @Override
-    public void changeToOp() throws IOException {
-        Motor motor = udpServer.receive();
-        State state = getState();
+    public void changeToOp(int num) throws IOException {
+        Motor motor = udpServer.receive(num);
+        State state = getState(num);
         while (state!=State.op){
             //printState(state);
             switch (state){
                 case server_op:
                 case error:
                     motor.setControlCode((short) 0x0100);
-                    udpServer.send(motor);
+                    udpServer.send(motor,num);
                     break;
                 case powered_lock:
                     motor.setControlCode((short) 0x0200);
-                    udpServer.send(motor);
+                    udpServer.send(motor,num);
                     break;
             }
-            state = getState();
+            state = getState(num);
         }
         //printState(state);
     }
 
     @Override
-    public void changeToPoweredLock() throws IOException {
-        Motor motor = udpServer.receive();
-        State state = getState();
+    public void changeToPoweredLock(int num) throws IOException {
+        Motor motor = udpServer.receive(num);
+        State state = getState(num);
         while (state!=State.powered_lock){
             switch (state){
                 case server_op:
                 case op:
                 case error:
                     motor.setControlCode((short) 0x0100);
-                    udpServer.send(motor);
+                    udpServer.send(motor,num);
                     break;
             }
-            state = getState();
+            state = getState(num);
         }
         //printState(state);
     }

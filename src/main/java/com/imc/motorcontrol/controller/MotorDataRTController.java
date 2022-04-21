@@ -26,21 +26,37 @@ public class MotorDataRTController {
         this.sampleService = sampleService;
     }
 
-    @GetMapping("/start/{name}")
-    public void startSample(@PathVariable String name){
+    @GetMapping("/start/{num}/{name}")
+    public void startSample(@PathVariable Integer num,@PathVariable String name){
         if (sampleService.getById(name) != null){
             name+="_new";
         }
-        startTime = motorControlService.startSample();
+        startTime = motorControlService.startSample(num);
         webSocketController.setSampling(true);
         this.name = name;
     }
 
-    @GetMapping("/end")
-    public void endSample() throws InterruptedException {
-        Timestamp endTime = motorControlService.endSample();
+    @GetMapping("/end/{num}")
+    public void endSample(@PathVariable Integer num) throws InterruptedException {
+        Timestamp endTime = motorControlService.endSample(num);
         sampleService.save(new Sample(startTime, endTime,name));
         webSocketController.setSampling(false);
     }
 
+    @GetMapping("/startall/{name}")
+    public void startSample(@PathVariable String name){
+        if (sampleService.getById(name) != null){
+            name+="_new";
+        }
+        startTime = motorControlService.startAllSample();
+        webSocketController.setSampling(true);//todo
+        this.name = name;
+    }
+
+    @GetMapping("/endall")
+    public void endSample() throws InterruptedException {
+        Timestamp endTime = motorControlService.endAllSample();
+        sampleService.save(new Sample(startTime, endTime,name));
+        webSocketController.setSampling(false);
+    }
 }

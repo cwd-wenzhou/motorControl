@@ -5,11 +5,11 @@ import com.imc.motorcontrol.entity.State;
 import java.io.IOException;
 
 public interface StateMachineService {
-    State getState() throws IOException;
+    State getState(int num) throws IOException;
 
-    void changeToOp() throws IOException;
+    void changeToOp(int num) throws IOException;
 
-    void changeToPoweredLock() throws IOException;
+    void changeToPoweredLock(int num) throws IOException;
 
     void printState(State statusCode) throws IOException;
 }

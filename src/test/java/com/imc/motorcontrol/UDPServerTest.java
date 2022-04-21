@@ -17,7 +17,7 @@ public class UDPServerTest {
     public void receiveTest() throws IOException {
         int i = 0 ;
         while (i++<10){
-            Motor motor  = udpServer.receive();
+            Motor motor  = udpServer.receive(0);
             System.out.println(motor);
         }
     }
@@ -25,7 +25,7 @@ public class UDPServerTest {
     @Test
     public void sendTest() throws IOException {
         Motor motor = new Motor();
-        udpServer.send(motor);
+        udpServer.send(motor,0);
     }
 
 

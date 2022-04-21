@@ -19,61 +19,61 @@ public class MotorParaController {
         this.motorControlService = motorControlService;
     }
 
-    @GetMapping("/mode/{mode}")
-    public void setModecode(@PathVariable Short mode) throws IOException {
+    @GetMapping("/mode/{mode}/{num}")
+    public void setModecode(@PathVariable Short mode,@PathVariable Integer num) throws IOException {
         System.out.println(mode);
-        motorControlService.setModeCode(mode);
+        motorControlService.setModeCode(mode,num);
     }
 
-    @GetMapping("/vel/{velocity}")
-    public void setVelocity(@PathVariable Short velocity) throws IOException {
-        motorControlService.setVelocity(velocity);
+    @GetMapping("/vel/{velocity}/{num}")
+    public void setVelocity(@PathVariable Short velocity,@PathVariable Integer num) throws IOException {
+        motorControlService.setVelocity(velocity,num);
     }
 
-    @GetMapping("/pos/{position}")
-    public void setPosition(@PathVariable Short position) throws IOException {
-        motorControlService.setPosition(position);
+    @GetMapping("/pos/{position}/{num}")
+    public void setPosition(@PathVariable Short position,@PathVariable Integer num) throws IOException {
+        motorControlService.setPosition(position,num);
     }
 
-    @GetMapping("/iq/{currentIq}")
-    public void setCurrentIq(@PathVariable short currentIq) throws IOException{
-        motorControlService.setCurrentIq(currentIq);
-    }
-
-
-    @GetMapping("/id/{currentId}")
-    public void setCurrentId(@PathVariable short currentId) throws IOException{
-        motorControlService.setCurrentId(currentId);
+    @GetMapping("/iq/{currentIq}/{num}")
+    public void setCurrentIq(@PathVariable short currentIq,@PathVariable Integer num) throws IOException{
+        motorControlService.setCurrentIq(currentIq,num);
     }
 
 
-    @GetMapping("/velkp/{speedRingKp}")
-    public void setSpeedRingKp(@PathVariable short speedRingKp) throws IOException{
-        motorControlService.setSpeedRingKp(speedRingKp);
+    @GetMapping("/id/{currentId}/{num}")
+    public void setCurrentId(@PathVariable short currentId,@PathVariable Integer num) throws IOException{
+        motorControlService.setCurrentId(currentId,num);
     }
 
-    @GetMapping("/velki/{speedRingKi}")
-    public void setSpeedRingKi(@PathVariable short speedRingKi) throws IOException{
-        motorControlService.setSpeedRingKi(speedRingKi);
+
+    @GetMapping("/velkp/{speedRingKp}/{num}")
+    public void setSpeedRingKp(@PathVariable short speedRingKp,@PathVariable Integer num) throws IOException{
+        motorControlService.setSpeedRingKp(speedRingKp,num);
     }
 
-    @GetMapping("poskp/{positionRingKp}")
-    public void setPositionRingKp(@PathVariable short positionRingKp) throws IOException{
-        motorControlService.setPositionRingKp(positionRingKp);
+    @GetMapping("/velki/{speedRingKi}/{num}")
+    public void setSpeedRingKi(@PathVariable short speedRingKi,@PathVariable Integer num) throws IOException{
+        motorControlService.setSpeedRingKi(speedRingKi,num);
     }
 
-    @GetMapping("poskd/{positionRingKd}")
-    void setPositionRingKd(@PathVariable short positionRingKd) throws IOException{
-        motorControlService.setPositionRingKd(positionRingKd);
+    @GetMapping("poskp/{positionRingKp}/{num}")
+    public void setPositionRingKp(@PathVariable short positionRingKp,@PathVariable Integer num) throws IOException{
+        motorControlService.setPositionRingKp(positionRingKp,num);
     }
 
-    @GetMapping("curkp/{currentRingKp}")
-    public void setCurrentRingKp(@PathVariable short currentRingKp) throws IOException{
-        motorControlService.setCurrentRingKp(currentRingKp);
+    @GetMapping("poskd/{positionRingKd}/{num}")
+    void setPositionRingKd(@PathVariable short positionRingKd,@PathVariable Integer num) throws IOException{
+        motorControlService.setPositionRingKd(positionRingKd,num);
     }
 
-    @GetMapping("curki/{currentRingKi}")
-    public void setCurrentRingKi(@PathVariable short currentRingKi) throws IOException{
-        motorControlService.setCurrentRingKi(currentRingKi);
+    @GetMapping("curkp/{currentRingKp}/{num}")
+    public void setCurrentRingKp(@PathVariable short currentRingKp,@PathVariable Integer num) throws IOException{
+        motorControlService.setCurrentRingKp(currentRingKp,num);
+    }
+
+    @GetMapping("curki/{currentRingKi}/{num}")
+    public void setCurrentRingKi(@PathVariable short currentRingKi,@PathVariable Integer num) throws IOException{
+        motorControlService.setCurrentRingKi(currentRingKi,num);
     }
 }

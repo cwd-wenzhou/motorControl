@@ -14,16 +14,18 @@ class StateMachineServiceTest {
 
     @Test
     void getState() throws IOException {
-        stateMachineService.printState(stateMachineService.getState());
+        stateMachineService.printState(stateMachineService.getState(0));
+        stateMachineService.printState(stateMachineService.getState(1));
+
     }
 
     @Test
     void changeToOp() throws IOException {
-        stateMachineService.changeToOp();
+        stateMachineService.changeToOp(0);
     }
 
     @Test
     void changeToPoweredLock() throws IOException {
-        stateMachineService.changeToPoweredLock();
+        stateMachineService.changeToPoweredLock(0);
     }
 }
